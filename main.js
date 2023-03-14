@@ -1,8 +1,8 @@
 // #region GAME LOGIC AND DATA
 
-// DATA
+// DATA 
 let clickCount = 0
-let height = 120
+let height = 140
 let width = 100
 let inflationRate = 20
 let maxsize = 300
@@ -13,23 +13,22 @@ let clockId = 0
 let timeRemaining = 0
 let currentPlayer = {}
 let currentColor = "red"
-let possibleColors =["red", "green", "blue", "purple", "pink"]
+let possibleColors = ["red", "green", "blue", "purple", "pink"]
 
 function startGame() {
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("game-controls").classList.remove("hidden")
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("main-controls").classList.add("hidden")
-  // @ts-ignore
-  document.getElementById("scoreboard").classList.add("hidden")
-   startClock()
+  //@ts-ignoredocument.getElementById("scoreboard").classList.add("hidden")
+  startClock()
   setTimeout(stopGame, gameLength)
 }
 
 function startClock() {
   timeRemaining = gameLength
   drawClock()
-  // @ts-ignore
+  //@ts-ignore
   clockId = setInterval(drawClock, 1000)
 }
 
@@ -37,9 +36,9 @@ function stopClock() {
   clearInterval(clockId)
 }
 
-function drawClock(){
+function drawClock() {
   let countdownElem = document.getElementById('countdown')
-  // @ts-ignore
+  //@ts-ignore
   countdownElem.innerText = (timeRemaining / 1000).toString()
   timeRemaining -= 1000
 }
@@ -56,11 +55,12 @@ function checkBalloonPop(){
   if (height >= maxsize) {
     console.log("pop the balloon")
     let balloonElement = document.getElementById("balloon")
-    // @ts-ignore
+    //@ts-ignore
     balloonElement.classList.remove(currentColor)
     getRandomColor()
-    // @ts-ignore
+    //@ts-ignore
     balloonElement.classList.add(currentColor)
+
     // @ts-ignore
     document.getElementById("pop-sound").play()
 
@@ -73,7 +73,6 @@ function checkBalloonPop(){
 function getRandomColor(){
   let i = Math.floor(Math.random() * possibleColors.length);
   currentColor = possibleColors[i]
-  possibleColors.length
 }
 
 function draw() {
@@ -81,49 +80,51 @@ function draw() {
   let clickCountElem = document.getElementById("click-count")
   let popCountElem = document.getElementById('pop-count')
   let highPopCountElem = document.getElementById('high-pop-count')
-let playerNameElem = document.getElementById('player-name')
+  let playerNameElem = document.getElementById('player-name')
 
-  // @ts-ignore
+  //@ts-ignore
   balloonElement.style.height = height + "px"
-  // @ts-ignore
+  //@ts-ignore
   balloonElement.style.width = width + "px"
-  
-  // @ts-ignore
+
+  //@ts-ignore
   clickCountElem.innerText = clickCount.toString()
-  // @ts-ignore
+  //@ts-ignore
   popCountElem.innerText = currentPopCount.toString()
-  // @ts-ignore
+  //@ts-ignore
   highPopCountElem.innerText = currentPlayer.topScore.toString()
-// @ts-ignore
+
+  //@ts-ignore
   playerNameElem.innerText = currentPlayer.name
 }
 
 function stopGame() {
   console.log("the game is over")
-  // @ts-ignore
+
+  //@ts-ignore
   document.getElementById("main-controls").classList.remove("hidden")
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("scoreboard").classList.remove("hidden")
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("game-controls").classList.add("hidden")
-  
+
   clickCount = 0
-  height = 120 
+  height = 120
   width = 100
-  
+
   if (currentPopCount > currentPlayer.topScore) {
     currentPlayer.topScore = currentPopCount
     savePlayers()
   }
-  
-  currentPopCount= 0
+
+  currentPopCount = 0
 
   stopClock()
   draw()
   drawScoreboard()
 }
 
-//#endregion
+// #endregion
 
 let players = []
 loadPlayers()
@@ -137,30 +138,31 @@ function setPlayer(event) {
   currentPlayer = players.find(player => player.name == playerName)
 
   if (!currentPlayer) {
-    currentPlayer = {name: playerName, topScore: 0 }
+    currentPlayer = { name: playerName, topScore: 0 }
     players.push(currentPlayer)
     savePlayers()
   }
-  
+
   form.reset()
-  document.getElementById("game")?.classList.remove("hidden")
+  //@ts-ignore
+  document.getElementById("game").classList.remove("hidden")
   form.classList.add("hidden")
   draw()
   drawScoreboard()
 }
 
 function changePlayer() {
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("player-form").classList.remove("hidden")
-  // @ts-ignore
+  //@ts-ignore
   document.getElementById("game").classList.add("hidden")
 }
 
 function savePlayers() {
   window.localStorage.setItem("players", JSON.stringify(players))
 }
-function loadPlayers(){
-  // @ts-ignore
+function loadPlayers() {
+  //@ts-ignore
   let playersData = JSON.parse(window.localStorage.getItem("players"))
   if (playersData) {
     players = playersData
@@ -183,8 +185,7 @@ function drawScoreboard(){
     </div>
     `
   })
-
-   // @ts-ignore
+  //@ts-ignore
   document.getElementById("players").innerHTML = template
 }
 
